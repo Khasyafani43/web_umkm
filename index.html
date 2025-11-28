@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TURA | Keuangan Mikro</title>
+  <!-- Pastikan file CSS Anda terhubung dengan benar -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">UMKM</div>
+  <nav>
+    <a href="#dashboard" class="nav-active">DASHBOARD</a>
+    <a href="#transaksi">TRANSAKSI</a>
+    <a href="#tabungan">TABUNGAN</a>
+    <a href="#laporan">LAPORAN</a>
+  </nav>
+</header>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+  <div class="container">
+    <h1 class="title">UMKM</h1>
+    <p class="tagline">Sistem Keuangan Usaha Mikro Profesional</p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Pendapatan Bulan Ini</h3>
+        <p class="amount" id="incomeMonth">Rp 0</p>
+      </div>
+      <div class="card">
+        <h3>Pengeluaran Bulan Ini</h3>
+        <p class="amount" id="expenseMonth">Rp 0</p>
+      </div>
+      <div class="card profit" id="cardTabungan">
+        <h3>Tabungan Usaha</h3>
+        <p class="amount dynamic" id="tabunganUsaha">Rp 0</p>
+      </div>
+      <div class="card saldo">
+        <h3>Saldo Operasional</h3>
+        <p class="amount big dynamic" id="saldoOperasional">Rp 0</p>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <h3>Grafik Saldo 30 Hari Terakhir</h3>
+      <div id="chartBars"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSAKSI -->
+<section id="transaksi" class="page">
+  <div class="container">
+    <h1 class="title">TAMBAH TRANSAKSI</h1>
+    <form id="formTransaksi" class="form">
+      <select id="tipe" required>
+        <option value="" disabled selected>Jenis Transaksi</option>
+        <option value="income">Pendapatan</option>
+        <option value="expense">Pengeluaran</option>
+      </select>
+      <input type="date" id="tanggal" required>
+      <select id="kategori" required>
+        <option value="" disabled selected>Pilih Kategori</option>
+      </select>
+      <input type="text" id="keterangan" placeholder="Keterangan" required>
+      <input type="number" id="jumlah" placeholder="Jumlah (Rp)" min="1" required>
+      <button type="submit" class="btn-primary">SIMPAN TRANSAKSI</button>
+    </form>
+  </div>
+</section>
+
+<!-- TABUNGAN USAHA -->
+<section id="tabungan" class="page">
+  <div class="container">
+    <h1 class="title">TABUNGAN USAHA</h1>
+    <p class="tagline">Dana cadangan & pengembangan usaha</p>
+
+    <div class="cards" style="margin: auto;">
+      <div class="card profit big" id="cardTabunganBesar">
+        <h3>Saldo Tabungan</h3>
+        <p class="amount big dynamic" id="saldoTabunganBesar">Rp 0</p>
+      </div>
+    </div>
+
+    <form id="formTabungan" class="form">
+      <select id="aksiTabungan">
+        <option value="setor">Setor ke Tabungan</option>
+        <option value="tarik">Tarik dari Tabungan</option>
+      </select>
+      <input type="number" id="jumlahTabungan" placeholder="Jumlah (Rp)" min="1000" required>
+      <input type="text" id="ketTabungan" placeholder="Keterangan (opsional)">
+      <button type="submit" class="btn-primary">PROSES</button>
+    </form>
+
+    <h3 style="margin-top:60px;color:#ccc;">Riwayat Tabungan</h3>
+    <div id="riwayatTabungan" class="transaction-list"></div>
+  </div>
+</section>
+
+<!-- LAPORAN -->
+<section id="laporan" class="page">
+  <div class="container">
+    <h1 class="title">LAPORAN KEUANGAN</h1>
+    <div class="filter-bar">
+      <select id="filterBulan"><option value="">Semua Bulan</option></select>
+      <button id="btnExport" class="btn-secondary">Export CSV</button>
+    </div>
+    <!-- Daftar transaksi akan dimuat di sini oleh JavaScript -->
+    <div id="listTransaksi" class="transaction-list">
+      <p class="empty">Belum ada transaksi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================================================================== -->
+<!--               ELEMEN BARU: DIALOG KONFIRMASI HAPUS                 -->
+<!-- =================================================================== -->
+<!-- Dialog ini akan muncul saat tombol hapus diklik -->
+<div id="confirmDialog" class="confirmation-dialog">
+  <div class="confirmation-content">
+    <h3>Apakah Anda yakin ingin menghapus transaksi ini?</h3>
+    <div class="confirmation-buttons">
+      <button id="confirmDelete" class="btn-confirm">Hapus</button>
+      <button id="cancelDelete" class="btn-cancel">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pastikan file JavaScript Anda terhubung -->
+<script src="script.js"></script>
+</body>
+</html>

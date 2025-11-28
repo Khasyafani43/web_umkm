@@ -1,0 +1,381 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: url("https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80")
+    center/cover fixed;
+  color: #fff;
+  min-height: 100vh;
+  position: relative;
+}
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(12px);
+  z-index: -1;
+}
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 1000;
+}
+.logo {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+nav a {
+  color: #aaa;
+  text-decoration: none;
+  margin-left: 40px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  transition: 0.3s;
+}
+nav a:hover,
+nav a.nav-active {
+  color: #fff;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 140px 20px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s;
+}
+.page.active {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+}
+
+.container {
+  text-align: center;
+  max-width: 1100px;
+  width: 100%;
+}
+.title {
+  font-size: 90px;
+  font-weight: 900;
+  letter-spacing: 8px;
+  margin-bottom: 10px;
+}
+.tagline {
+  font-size: 20px;
+  color: #ccc;
+  letter-spacing: 4px;
+  margin-bottom: 70px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.card {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  padding: 40px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: 0.4s;
+}
+.card:hover {
+  transform: translateY(-12px);
+}
+.card h3 {
+  font-size: 15px;
+  color: #aaa;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.amount {
+  font-size: 38px;
+  font-weight: 800;
+}
+.card.profit {
+  background: linear-gradient(
+    135deg,
+    rgba(74, 222, 128, 0.2),
+    rgba(34, 197, 94, 0.15)
+  );
+}
+.card.profit .amount {
+  color: #4ade80;
+}
+.card.saldo,
+.card.big {
+  grid-column: 1/-1;
+  padding: 50px;
+  background: rgba(255, 255, 255, 0.09);
+}
+.card.saldo .amount,
+.card.big .amount {
+  font-size: 52px;
+}
+
+.chart-container {
+  margin-top: 90px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+#chartBars {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  gap: 5px;
+  height: 200px;
+  align-items: end;
+}
+.bar {
+  background: #444;
+  border-radius: 4px 4px 0 0;
+  width: 100%;
+  transition: height 0.6s;
+}
+.bar.income {
+  background: #4ade80;
+}
+.bar.expense {
+  background: #f87171;
+}
+
+.form {
+  max-width: 500px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.form input,
+.form select {
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid #444;
+  border-radius: 12px;
+  color: #f5f3f3;
+  font-size: 16px;
+}
+.btn-primary,
+.btn-secondary {
+  padding: 18px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+.btn-primary {
+  background: #333;
+  color: #fff;
+}
+.btn-secondary {
+  background: #444;
+  color: #fff;
+}
+
+.transaction-list > div {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 18px;
+  border-radius: 12px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.amount.income {
+  color: #4ade80;
+}
+.amount.expense {
+  color: #f87171;
+}
+.empty {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 60px;
+  }
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  header {
+    padding: 0 20px;
+  }
+  nav a {
+    margin-left: 20px;
+    font-size: 13px;
+  }
+}
+/* Tambahkan di bagian atas atau ganti yang lama */
+select,
+option {
+  color: #999999 !important;
+  background: white;
+}
+select option[disabled] {
+  color: #999;
+}
+
+/* Warna dinamis saldo */
+.dynamic.zero {
+  color: #ccc !important;
+}
+.dynamic.positive {
+  color: #4ade80 !important;
+}
+.dynamic.negative {
+  color: #f87171 !important;
+}
+
+/* Card tabungan menyesuaikan lebar nominal */
+#cardTabungan,
+#cardTabunganBesar {
+  min-width: 280px;
+  width: fit-content;
+  margin: 0 auto;
+}
+/* ===================================================================
+   CSS TAMBAHAN UNTUK FITUR HAPUS TRANSAKSI
+   =================================================================== */
+
+/* --- Tombol Hapus --- */
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 10px; /* Jarak antara jumlah dan tombol hapus */
+  transition: transform 0.2s ease-in-out;
+}
+
+.delete-btn:hover {
+  transform: scale(1.1); /* Efek zoom saat hover */
+}
+
+.delete-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #f87171; /* Warna merah untuk ikon tempat sampah */
+}
+
+
+/* --- Tata Letak Item Transaksi --- */
+/* CSS ini memodifikasi tampilan setiap item di daftar transaksi */
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px; /* Sesuaikan dengan padding .transaction-list > div */
+  border-radius: 12px;
+  margin: 10px 0;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.transaction-info {
+  flex-grow: 1; /* Memastikan info transaksi memakan ruang yang tersisa */
+  text-align: left;
+}
+
+.transaction-actions {
+  display: flex;
+  align-items: center;
+  white-space: nowrap; /* Mencegah teks jumlah pecah ke baris baru */
+}
+
+
+/* --- Dialog Konfirmasi Hapus --- */
+/* Overlay latar belakang yang menggelapkan layar */
+.confirmation-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Gelap transparan */
+  display: none; /* Sembunyikan secara default */
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* Pastikan muncul di atas elemen lain */
+}
+
+/* Kotak konten konfirmasi */
+.confirmation-content {
+  background: #2a2a2a; /* Sesuaikan dengan tema gelap Anda */
+  color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.confirmation-content h3 {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Tombol di dalam dialog */
+.confirmation-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+}
+
+.btn-confirm, .btn-cancel {
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: background-color 0.2s;
+}
+
+.btn-confirm {
+  background-color: #f87171; /* Warna merah untuk tombol hapus */
+  color: #fff;
+}
+
+.btn-confirm:hover {
+  background-color: #ef4444;
+}
+
+.btn-cancel {
+  background-color: #555; /* Warna abu-abu untuk tombol batal */
+  color: #fff;
+}
+
+.btn-cancel:hover {
+  background-color: #666;
+}
